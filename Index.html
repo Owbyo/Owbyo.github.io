@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Auditoría QMSOP045441 - Preparación ISP</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700&family=DM+Serif+Display&display=swap');
+
+:root {
+–bg: #0f1117;
+–surface: #1a1d27;
+–surface2: #232736;
+–border: #2e3348;
+–text: #e4e6f0;
+–text-dim: #8b8fa8;
+–accent: #4f8cff;
+–accent-glow: rgba(79, 140, 255, 0.15);
+–red: #ff5c5c;
+–red-bg: rgba(255, 92, 92, 0.1);
+–orange: #ffaa4f;
+–orange-bg: rgba(255, 170, 79, 0.1);
+–green: #4fdb8a;
+–green-bg: rgba(79, 219, 138, 0.1);
+–yellow: #ffd84f;
+–yellow-bg: rgba(255, 216, 79, 0.1);
+–purple: #a78bfa;
+}
+
+- { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+font-family: ‘DM Sans’, sans-serif;
+background: var(–bg);
+color: var(–text);
+line-height: 1.6;
+min-height: 100vh;
+}
+
+.header {
+background: linear-gradient(135deg, #1a1d27 0%, #1e2a3a 100%);
+border-bottom: 1px solid var(–border);
+padding: 20px 24px;
+position: sticky;
+top: 0;
+z-index: 100;
+backdrop-filter: blur(20px);
+}
+
+.header h1 {
+font-family: ‘DM Serif Display’, serif;
+font-size: 1.4rem;
+color: var(–accent);
+margin-bottom: 4px;
+}
+
+.header p {
+font-size: 0.82rem;
+color: var(–text-dim);
+}
+
+.badge-row {
+display: flex;
+gap: 8px;
+margin-top: 10px;
+flex-wrap: wrap;
+}
+
+.badge {
+font-size: 0.7rem;
+padding: 3px 10px;
+border-radius: 20px;
+font-weight: 600;
+text-transform: uppercase;
+letter-spacing: 0.5px;
+}
+
+.badge-red { background: var(–red-bg); color: var(–red); border: 1px solid rgba(255,92,92,0.3); }
+.badge-orange { background: var(–orange-bg); color: var(–orange); border: 1px solid rgba(255,170,79,0.3); }
+.badge-green { background: var(–green-bg); color: var(–green); border: 1px solid rgba(79,219,138,0.3); }
+
+.tabs {
+display: flex;
+overflow-x: auto;
+gap: 4px;
+padding: 12px 24px;
+background: var(–surface);
+border-bottom: 1px solid var(–border);
+-webkit-overflow-scrolling: touch;
+}
+
+.tab {
+padding: 8px 16px;
+border-radius: 8px;
+font-size: 0.78rem;
+font-weight: 600;
+cursor: pointer;
+white-space: nowrap;
+transition: all 0.2s;
+color: var(–text-dim);
+border: 1px solid transparent;
+}
+
+.tab:hover { background: var(–surface2); color: var(–text); }
+.tab.active { background: var(–accent-glow); color: var(–accent); border-color: rgba(79,140,255,0.3); }
+
+.content {
+padding: 20px 24px;
+max-width: 900px;
+margin: 0 auto;
+}
+
+.section { display: none; }
+.section.active { display: block; }
+
+.card {
+background: var(–surface);
+border: 1px solid var(–border);
+border-radius: 12px;
+padding: 20px;
+margin-bottom: 16px;
+}
+
+.card h2 {
+font-family: ‘DM Serif Display’, serif;
+font-size: 1.15rem;
+margin-bottom: 12px;
+color: var(–text);
+}
+
+.card h3 {
+font-size: 0.9rem;
+font-weight: 600;
+margin: 16px 0 8px;
+color: var(–accent);
+}
+
+.card p, .card li {
+font-size: 0.85rem;
+color: var(–text-dim);
+line-height: 1.7;
+}
+
+.card ul { padding-left: 18px; }
+.card li { margin-bottom: 6px; }
+
+.risk-tag {
+display: inline-block;
+font-size: 0.68rem;
+padding: 2px 8px;
+border-radius: 4px;
+font-weight: 700;
+margin-right: 6px;
+vertical-align: middle;
+}
+
+.risk-critico { background: var(–red-bg); color: var(–red); }
+.risk-medio { background: var(–orange-bg); color: var(–orange); }
+.risk-mejora { background: var(–green-bg); color: var(–green); }
+.risk-solido { background: var(–accent-glow); color: var(–accent); }
+
+.alert-box {
+border-radius: 10px;
+padding: 14px 16px;
+margin: 12px 0;
+font-size: 0.83rem;
+line-height: 1.6;
+}
+
+.alert-red { background: var(–red-bg); border-left: 3px solid var(–red); }
+.alert-orange { background: var(–orange-bg); border-left: 3px solid var(–orange); }
+.alert-green { background: var(–green-bg); border-left: 3px solid var(–green); }
+.alert-blue { background: var(–accent-glow); border-left: 3px solid var(–accent); }
+
+.q-card {
+background: var(–surface2);
+border: 1px solid var(–border);
+border-radius: 10px;
+padding: 16px;
+margin-bottom: 12px;
+cursor: pointer;
+transition: all 0.2s;
+}
+
+.q-card:hover { border-color: var(–accent); }
+
+.q-card .question {
+font-size: 0.88rem;
+font-weight: 600;
+color: var(–text);
+margin-bottom: 4px;
+}
+
+.q-card .q-meta {
+font-size: 0.75rem;
+color: var(–text-dim);
+margin-bottom: 8px;
+}
+
+.q-card .answer {
+display: none;
+font-size: 0.82rem;
+color: var(–text-dim);
+padding-top: 10px;
+border-top: 1px solid var(–border);
+margin-top: 8px;
+line-height: 1.7;
+}
+
+.q-card.open .answer { display: block; }
+
+.checklist-item {
+display: flex;
+align-items: flex-start;
+gap: 10px;
+padding: 10px 0;
+border-bottom: 1px solid rgba(46,51,72,0.5);
+font-size: 0.83rem;
+}
+
+.checklist-item input[type=“checkbox”] {
+margin-top: 3px;
+accent-color: var(–accent);
+width: 16px;
+height: 16px;
+flex-shrink: 0;
+}
+
+.checklist-item.checked label { text-decoration: line-through; color: var(–text-dim); opacity: 0.6; }
+
+.checklist-item .priority {
+font-size: 0.68rem;
+padding: 1px 6px;
+border-radius: 3px;
+font-weight: 700;
+flex-shrink: 0;
+}
+
+.p-critico { background: var(–red-bg); color: var(–red); }
+.p-importante { background: var(–orange-bg); color: var(–orange); }
+.p-deseable { background: var(–green-bg); color: var(–green); }
+
+.comparison-table {
+width: 100%;
+border-collapse: collapse;
+font-size: 0.8rem;
+margin: 12px 0;
+}
+
+.comparison-table th {
+background: var(–surface2);
+padding: 10px 12px;
+text-align: left;
+font-weight: 600;
+color: var(–accent);
+border-bottom: 2px solid var(–border);
+}
+
+.comparison-table td {
+padding: 10px 12px;
+border-bottom: 1px solid var(–border);
+color: var(–text-dim);
+vertical-align: top;
+}
+
+.comparison-table tr:hover td { background: rgba(79,140,255,0.03); }
+
+.search-box {
+width: 100%;
+padding: 12px 16px;
+background: var(–surface2);
+border: 1px solid var(–border);
+border-radius: 10px;
+color: var(–text);
+font-size: 0.85rem;
+font-family: ‘DM Sans’, sans-serif;
+margin-bottom: 16px;
+outline: none;
+transition: border-color 0.2s;
+}
+
+.search-box:focus { border-color: var(–accent); }
+.search-box::placeholder { color: var(–text-dim); }
+
+.progress-bar {
+width: 100%;
+height: 6px;
+background: var(–surface2);
+border-radius: 3px;
+overflow: hidden;
+margin: 8px 0;
+}
+
+.progress-fill {
+height: 100%;
+border-radius: 3px;
+background: linear-gradient(90deg, var(–accent), var(–purple));
+transition: width 0.5s ease;
+}
+
+.counter {
+font-size: 0.78rem;
+color: var(–text-dim);
+text-align: right;
+}
+
+.tip-box {
+background: linear-gradient(135deg, rgba(79,140,255,0.08), rgba(167,139,250,0.08));
+border: 1px solid rgba(79,140,255,0.2);
+border-radius: 10px;
+padding: 14px 16px;
+margin: 12px 0;
+font-size: 0.82rem;
+line-height: 1.7;
+color: var(–text);
+}
+
+.tip-box strong { color: var(–accent); }
+
+.version-compare {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 12px;
+margin: 12px 0;
+}
+
+.version-box {
+padding: 14px;
+border-radius: 10px;
+font-size: 0.8rem;
+}
+
+.v-actual { background: var(–orange-bg); border: 1px solid rgba(255,170,79,0.3); }
+.v-nueva { background: var(–green-bg); border: 1px solid rgba(79,219,138,0.3); }
+
+.version-box h4 {
+font-size: 0.78rem;
+font-weight: 700;
+margin-bottom: 6px;
+}
+
+.v-actual h4 { color: var(–orange); }
+.v-nueva h4 { color: var(–green); }
+
+@media (max-width: 600px) {
+.version-compare { grid-template-columns: 1fr; }
+.header h1 { font-size: 1.2rem; }
+}
+
+.fade-in { animation: fadeIn 0.3s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+</style>
+
+</head>
+<body>
+
+<div class="header">
+  <h1>🔍 Auditoría QMSOP045441</h1>
+  <p>Preparación ISP — Asuntos Regulatorios Nacional, Site Abbott EPD Chile</p>
+  <div class="badge-row">
+    <span class="badge badge-red">Auditoría Jueves</span>
+    <span class="badge badge-orange">v4.0 Vigente / v5.0 en proceso</span>
+    <span class="badge badge-green">Material Interactivo</span>
+  </div>
+</div>
+
+<div class="tabs" id="tabs">
+  <div class="tab active" data-tab="resumen">Resumen</div>
+  <div class="tab" data-tab="rapido">Modo Rápido</div>
+  <div class="tab" data-tab="gaps">GAP Analysis</div>
+  <div class="tab" data-tab="preguntas">Preguntas Auditor</div>
+  <div class="tab" data-tab="checklist">Checklist</div>
+  <div class="tab" data-tab="comparacion">v4 vs v5</div>
+  <div class="tab" data-tab="didactico">Didáctico</div>
+  <div class="tab" data-tab="defensa">Defensa</div>
+</div>
+
+<div class="content">
+
+<!-- ==================== RESUMEN ==================== -->
+
+<div class="section active" id="resumen">
+  <div class="card fade-in">
+    <h2>1. Resumen Ejecutivo</h2>
+    <p>El <strong>QMSOP045441</strong> es el POE maestro de Asuntos Regulatorios Nacional del Site Abbott EPD Chile. Define los procesos de gestión del ciclo de vida de registros sanitarios ante el ISP: inscripciones, renovaciones, modificaciones, cancelaciones, suspensiones, rectificaciones y respuestas a la autoridad.</p>
+
+```
+<div class="alert-box alert-red" style="margin-top:14px;">
+  <strong>⚠️ Situación actual:</strong> La versión vigente (v4.0) tiene brechas conocidas que la v5.0 corrige, pero la v5.0 NO estará firmada para la auditoría del jueves. <strong>Se auditará contra la v4.0.</strong> Esto significa que los gaps de la v4.0 son los que importan, y las mejoras de la v5.0 pueden mencionarse como "en proceso de implementación" pero no como evidencia de cumplimiento.
+</div>
+
+<h3>¿Qué cubre?</h3>
+<ul>
+  <li>Elaboración e ingreso de dossiers de inscripción (locales e importados)</li>
+  <li>Renovación de registros sanitarios</li>
+  <li>Modificaciones legales, técnicas, analíticas a los R.S.</li>
+  <li>Actualización de folletos por CCDS y otros eventos</li>
+  <li>Manejo de notificaciones de cambio (NC/SCN)</li>
+  <li>Cancelación de registros</li>
+  <li>Productos Legacy Abbott y LCR en Agile</li>
+  <li>Registros FX (exportación)</li>
+</ul>
+
+<h3>Criticidad en auditoría</h3>
+<p><strong>ALTA.</strong> Este POE es la columna vertebral del área regulatoria. Un auditor ISP evaluará si el proceso escrito se refleja en la práctica: trazabilidad de sometimientos, tiempos de respuesta, actualización de DARIUS, controles de cambio cerrados, folletos al día, y evidencia de capacitación del equipo.</p>
+```
+
+  </div>
+</div>
+
+<!-- ==================== MODO RÁPIDO ==================== -->
+
+<div class="section" id="rapido">
+  <div class="card fade-in">
+    <h2>2. Modo Rápido — Visión Accionable</h2>
+
+```
+<h3>Resumen del proceso en 30 segundos</h3>
+<p>AARR Nacional recopila documentación → confecciona dossier → somete al ISP → carga en DARIUS en 24h → gestiona observaciones → recibe resolución → revisa conformidad → informa áreas → cierra en DARIUS y SolTRAQs. Para modificaciones, todo va atado a un control de cambio.</p>
+
+<h3>🔴 Top 5 Puntos Críticos</h3>
+<div class="alert-box alert-red">
+  <strong>1. Trazabilidad DARIUS:</strong> ¿Toda APL está actualizada? ¿Se cargó en 24h? ¿Cartas de deficiencia con respuesta subidas?
+</div>
+<div class="alert-box alert-red">
+  <strong>2. Folletos CCDS:</strong> ¿Se cumplieron los 120 días o la fecha de Global? ¿Hay actividad en DARIUS creada en ≤5 días hábiles desde el evento?
+</div>
+<div class="alert-box alert-red">
+  <strong>3. Controles de Cambio en SolTRAQs:</strong> ¿Están cerrados? ¿Las tareas regulatorias tienen evidencia de resolución ISP?
+</div>
+<div class="alert-box alert-orange">
+  <strong>4. Capacitación:</strong> ¿Existe registro de capacitación del equipo en este POE (v4.0)? ¿La evaluación (Anexo-01) está completada?
+</div>
+<div class="alert-box alert-orange">
+  <strong>5. Carpeta REGULATORIO NACIONAL:</strong> ¿Están los dossiers organizados por producto/asesor? ¿Planilla "Ingresos ISP (todo)" actualizada?
+</div>
+
+<h3>📋 Documentos a tener a mano</h3>
+<ul>
+  <li>Resoluciones ISP recientes (inscripciones, renovaciones, modificaciones)</li>
+  <li>Pantalla DARIUS con APLs actualizadas</li>
+  <li>SolTRAQs: controles de cambio abiertos y cerrados del área</li>
+  <li>Planilla "Ingresos ISP (todo)"</li>
+  <li>Registros de capacitación en este POE</li>
+  <li>Ejemplo de dossier completo (local e importado)</li>
+  <li>Evidencia de cumplimiento de plazos CCDS</li>
+  <li>Listado de renovaciones con plan del Director Técnico</li>
+  <li>Checklist III-D.1.3.ANEXO-03 completado para PTI</li>
+</ul>
+```
+
+  </div>
+</div>
+
+<!-- ==================== GAP ANALYSIS ==================== -->
+
+<div class="section" id="gaps">
+  <div class="card fade-in">
+    <h2>4. GAP Analysis — Brechas Detectadas</h2>
+    <p style="margin-bottom:16px;">Análisis de brechas entre lo que dice la v4.0 vigente, lo que un auditor ISP esperaría ver, y lo que probablemente existe en la práctica.</p>
+
+```
+<div class="alert-box alert-red">
+  <span class="risk-tag risk-critico">CRÍTICO</span>
+  <strong>GAP 1: Ausencia de referencias a I+D en la versión vigente ya eliminadas en v5.0</strong><br>
+  La v4.0 tiene múltiples referencias a procedimientos de I+D (EID.01.02.SAN.WI01, EID.03.01.SAN.WI01, etc.). Si el área de I+D ya no existe como tal en la estructura actual, el auditor podría preguntar por estas áreas y encontrar inconsistencia entre el POE vigente y la realidad organizacional.<br>
+  <strong>Evidencia necesaria:</strong> Explicar que la v5.0 en proceso elimina estas referencias; tener disponible el MoC/CC que origina el cambio.<br>
+  <strong>Recomendación:</strong> Preparar respuesta narrativa: "Estamos en proceso de actualización del POE para reflejar la nueva estructura. Las funciones de I+D fueron absorbidas por [áreas]. El cambio está documentado en el CC [número]."
+</div>
+
+<div class="alert-box alert-red">
+  <span class="risk-tag risk-critico">CRÍTICO</span>
+  <strong>GAP 2: Plataforma GICONA vs SAFIS</strong><br>
+  La v4.0 vigente referencia GICONA como plataforma del ISP. Si el ISP ya migró a SAFIS, el auditor puede detectar que el POE vigente está desactualizado en un punto operativo clave.<br>
+  <strong>Evidencia necesaria:</strong> Demostrar que en la práctica se usa SAFIS; tener screenshots o registros de ingresos vía SAFIS.<br>
+  <strong>Recomendación:</strong> Respuesta preparada: "La migración de GICONA a SAFIS fue implementada por el ISP. En la práctica usamos SAFIS. La actualización del POE está en proceso en la v5.0."
+</div>
+
+<div class="alert-box alert-red">
+  <span class="risk-tag risk-critico">CRÍTICO</span>
+  <strong>GAP 3: No hay proceso de suspensión voluntaria de distribución en v4.0</strong><br>
+  La v4.0 no contempla la suspensión voluntaria de distribución, que la v5.0 sí incorpora con flujo detallado. Si existen productos con distribución suspendida, no hay procedimiento vigente que lo respalde.<br>
+  <strong>Evidencia necesaria:</strong> Verificar si hay productos actualmente suspendidos. Si no los hay, el riesgo baja.<br>
+  <strong>Recomendación:</strong> Si hay productos suspendidos, documentar la decisión y el proceso seguido incluso sin POE formal.
+</div>
+
+<div class="alert-box alert-orange">
+  <span class="risk-tag risk-medio">MEDIO</span>
+  <strong>GAP 4: Dispositivos médicos no cubiertos en v4.0</strong><br>
+  La v5.0 incorpora el flujo de certificación de dispositivos médicos. Si el site maneja DM actualmente, no hay procedimiento vigente.<br>
+  <strong>Evidencia necesaria:</strong> Confirmar si hay DM registrados/en proceso.<br>
+  <strong>Recomendación:</strong> Si aplica, tener evidencia del proceso seguido y mencionar la v5.0 en desarrollo.
+</div>
+
+<div class="alert-box alert-orange">
+  <span class="risk-tag risk-medio">MEDIO</span>
+  <strong>GAP 5: Plan de renovación — responsabilidades difusas en v4.0</strong><br>
+  En v4.0, el plan de renovación "lo hará el Director Técnico, posteriormente el RA Project Manager debe visarlo". La v5.0 es mucho más detallada con el Program Manager, formulario "Product Registration Renew Assessment" y flujo con SME. El proceso real probablemente se acerca más a v5.0.<br>
+  <strong>Evidencia necesaria:</strong> Tener el plan de renovación vigente, correos de confirmación del DT, evidencia de los formularios.<br>
+  <strong>Recomendación:</strong> Asegurar que existe evidencia del plan de renovación aprobado por DT para el ciclo actual.
+</div>
+
+<div class="alert-box alert-orange">
+  <span class="risk-tag risk-medio">MEDIO</span>
+  <strong>GAP 6: Listado SDC.L-026 no referenciado en v4.0</strong><br>
+  El listado de productos registrados SDC.L-026 es clave para cancelaciones y renovaciones. La v5.0 lo incorpora explícitamente; la v4.0 no lo menciona.<br>
+  <strong>Evidencia necesaria:</strong> Tener el listado actualizado y disponible.<br>
+  <strong>Recomendación:</strong> Aunque no esté en el POE vigente, tenerlo listo demuestra control.
+</div>
+
+<div class="alert-box alert-green">
+  <span class="risk-tag risk-mejora">MEJORA</span>
+  <strong>GAP 7: Registro de trámites — SharePoint nuevo no existe en v4.0</strong><br>
+  La v5.0 establece que desde 2026 los trámites se registran en SharePoint. La v4.0 solo menciona la planilla en carpeta de red. Si ya se usa SharePoint en la práctica, hay una brecha entre POE vigente y práctica real.<br>
+  <strong>Recomendación:</strong> Usar la planilla original como referencia hasta que v5.0 esté vigente, o documentar la transición.
+</div>
+
+<div class="alert-box alert-green">
+  <span class="risk-tag risk-mejora">MEJORA</span>
+  <strong>GAP 8: Plazos de conservación vacíos en v4.0</strong><br>
+  La v4.0 dice "No aplica" en plazos de conservación. La v5.0 establece LEG140 = Cierre del sitio + 10 años. Aunque no es un requisito ISP per se, demuestra madurez documental.<br>
+  <strong>Recomendación:</strong> No debería generar observación, pero si preguntan, explicar que se está incorporando en la próxima versión.
+</div>
+```
+
+  </div>
+</div>
+
+<!-- ==================== PREGUNTAS ==================== -->
+
+<div class="section" id="preguntas">
+  <div class="card fade-in">
+    <h2>5. Preguntas Tipo Auditor ISP</h2>
+    <p style="margin-bottom:12px;">Toca cada pregunta para ver qué busca el auditor, qué evidencia necesitas y qué respuesta sería débil.</p>
+
+```
+<input type="text" class="search-box" id="searchQuestions" placeholder="🔍 Buscar preguntas..." oninput="filterQuestions()">
+
+<h3 style="color:var(--green)">Nivel 1 — Básicas (entendimiento general)</h3>
+
+<div class="q-card" onclick="this.classList.toggle('open')">
+  <div class="question">¿Cuál es el objetivo de este procedimiento?</div>
+  <div class="q-meta">Valida: conocimiento básico del POE</div>
+  <div class="answer">
+    <strong>Respuesta ideal:</strong> "Este procedimiento define los procesos que realiza Asuntos Regulatorios Nacional ante el ISP para gestionar el ciclo de vida de los registros sanitarios: inscripciones, renovaciones, modificaciones, cancelaciones, y respuestas a la autoridad, tanto para productos de fabricación local como importados."<br><br>
+    <strong>Evidencia:</strong> Tener el POE a la mano, conocer su número y versión.<br>
+    <strong>⚠️ Respuesta débil:</strong> No saber la versión vigente, confundir el alcance, o no mencionar productos importados.
+  </div>
+</div>
+
+<div class="q-card" onclick="this.classList.toggle('open')">
+  <div class="question">¿Qué tipos de sometimientos están en el alcance de este procedimiento?</div>
+  <div class="q-meta">Valida: conocimiento del alcance</div>
+  <div class="answer">
+    <strong>Respuesta ideal:</strong> "Inscripciones, renovaciones, modificaciones a registros, suspensiones, cancelaciones, respuestas a las autoridades y rectificaciones."<br><br>
+    <strong>⚠️ Respuesta débil:</strong> Olvidar las rectificaciones o las suspensiones.
+  </div>
+</div>
+
+<div class="q-card" onclick="this.classList.toggle('open')">
+  <div class="question">¿Quién es responsable de confeccionar e ingresar los dossiers de registro?</div>
+  <div class="q-meta">Valida: conocimiento de responsabilidades</div>
+  <div class="answer">
+    <strong>Respuesta ideal:</strong> "El Asesor de Registro Nacional asignado al producto, previa coordinación con las áreas técnicas relevantes (EBF/Operaciones Analíticas, MS&T, Validaciones, y para importados, Regulatorio LATAM y/o filiales)."<br><br>
+    <strong>Evidencia:</strong> Saber quién es el ARN de productos específicos si preguntan por uno en particular.<br>
+    <strong>⚠️ Respuesta débil:</strong> "Regulatorio" sin especificar el rol o no conocer las áreas de coordinación.
+  </div>
+</div>
+
+<h3 style="color:var(--orange)">Nivel 2 — Técnicas (trazabilidad y control)</h3>
+
+<div class="q-card" onclick="this.classList.toggle('open')">
+  <div class="question">Muéstreme un ejemplo de un dossier de inscripción reciente. ¿Dónde está la evidencia de carga en DARIUS dentro de 24 horas?</div>
+  <div class="q-meta">Valida: cumplimiento del plazo de 24h de carga en DARIUS</div>
+  <div class="answer">
+    <strong>Qué busca:</strong> Que exista trazabilidad entre la fecha de sometimiento al ISP y la fecha de carga en DARIUS. El POE establece 24h conforme a EID.01.02.GRA.SOP.<br><br>
+    <strong>Evidencia necesaria:</strong> Screenshot de DARIUS mostrando la APL con fecha de creación/carga vs. fecha del comprobante de ingreso ISP.<br><br>
+    <strong>⚠️ Respuesta débil:</strong> No poder mostrar la APL, o que la fecha de carga sea significativamente posterior al sometimiento.
+  </div>
+</div>
+
+<div class="q-card" onclick="this.classList.toggle('open')">
+  <div class="question">¿Cómo gestionan las observaciones/inadmisibilidades del ISP? Muéstreme un caso.</div>
+  <div class="q-meta">Valida: proceso de subsanación y registro de cartas de deficiencia</div>
+  <div class="answer">
+    <strong>Qué busca:</strong> Que las inadmisibilidades se subsanen en tiempo y forma, que se carguen en DARIUS como carta de deficiencia con su respuesta, y que haya evidencia del apoyo de áreas pertinentes.<br><br>
+    <strong>Evidencia:</strong> DARIUS con carta de deficiencia + respuesta subida. Correos de coordinación con áreas técnicas. Comprobante de reingreso al ISP.<br><br>
+    <strong>⚠️ Respuesta débil:</strong> "Se resolvió verbalmente" o no tener registro de la carta de deficiencia en DARIUS.
+  </div>
+</div>
+
+<div class="q-card" onclick="this.classList.toggle('open')">
+  <div class="question">¿Tienen algún folleto con actualización CCDS pendiente de someter? ¿Cómo miden los plazos?</div>
+  <div class="q-meta">Valida: cumplimiento de plazos CCDS (120 días o fecha Global)</div>
+  <div class="answer">
+    <strong>Qué busca:</strong> Que las actualizaciones de CCDS se gestionen dentro de 5 días hábiles (crear actividad en DARIUS) y se sometan en el plazo establecido (120 días o fecha Global).<br><br>
+    <strong>Evidencia:</strong> DARIUS con actividades CCDS, fechas de creación, fechas de sometimiento. Listado de CCDS pendientes con fechas límite.<br><br>
+    <strong>⚠️ Respuesta débil:</strong> No saber cuántos CCDS están pendientes, o no poder demostrar que se creó la actividad en DARIUS en ≤5 días.
+  </div>
+</div>
+
+<div class="q-card" onclick="this.classList.toggle('open')">
+  <div class="question">¿Cómo se aseguran de que las resoluciones aprobatorias coincidan con lo sometido?</div>
+  <div class="q-meta">Valida: proceso de revisión de resoluciones y rectificaciones</div>
+  <div class="answer">
+    <strong>Qué busca:</strong> Que exista un proceso de revisión sistemática de cada resolución vs. lo que se sometió, y que las discrepancias generen solicitudes de rectificación.<br><br>
+    <strong>Evidencia:</strong> Resoluciones con marca de revisión, correos informando aprobación a las áreas, solicitudes de rectificación cuando hubo diferencias.<br><br>
+    <strong>⚠️ Respuesta débil:</strong> "Confiamos en que el ISP aprueba lo correcto" o no tener proceso de verificación.
+  </div>
+</div>
+
+<h3 style="color:var(--red)">Nivel 3 — Críticas / Incómodas</h3>
+
+<div class="q-card" onclick="this.classList.toggle('open')">
+  <div class="question">Veo que su POE referencia la plataforma GICONA. ¿No es que el ISP ya migró a SAFIS? ¿Por qué su procedimiento vigente no está actualizado?</div>
+  <div class="q-meta">Valida: vigencia del POE vs. realidad operativa</div>
+  <div class="answer">
+    <strong>Qué busca:</strong> Evaluar si el sistema de calidad reacciona oportunamente a cambios del entorno regulatorio.<br><br>
+    <strong>Respuesta recomendada:</strong> "Efectivamente, el ISP migró de GICONA a SAFIS. En la práctica operativa ya estamos trabajando con SAFIS. La actualización formal del POE está en proceso en la versión 5.0, donde se reemplaza toda referencia a GICONA por SAFIS. El control de cambio asociado es [número del CC/MoC]."<br><br>
+    <strong>Evidencia de respaldo:</strong> Screenshots de ingresos hechos en SAFIS, el CC/MoC abierto para la v5.0.<br><br>
+    <strong>⚠️ Respuesta riesgosa:</strong> "No nos habíamos dado cuenta" o no poder demostrar que ya se usa SAFIS.
+  </div>
+</div>
+
+<div class="q-card" onclick="this.classList.toggle('open')">
+  <div class="question">¿Tienen controles de cambio regulatorios abiertos vencidos en SolTRAQs? ¿Cuántos?</div>
+  <div class="q-meta">Valida: gestión oportuna de CC y cierre de tareas</div>
+  <div class="answer">
+    <strong>Qué busca:</strong> Que no haya acumulación de CC sin cerrar, especialmente los que dependen de resoluciones ISP ya recibidas.<br><br>
+    <strong>Evidencia:</strong> Reporte de SolTRAQs con CC abiertos del área, fechas target vs. real. Si hay vencidos, tener justificación documentada.<br><br>
+    <strong>⚠️ Respuesta riesgosa:</strong> No saber cuántos CC están abiertos o no tener explicación para los vencidos. Esto es una observación casi segura si hay muchos vencidos.
+  </div>
+</div>
+
+<div class="q-card" onclick="this.classList.toggle('open')">
+  <div class="question">Su POE menciona que el ARN debe informar "a todas las áreas involucradas" cuando se aprueba un registro. ¿Cómo lo demuestran? ¿Qué pasa si un área dice que no fue informada?</div>
+  <div class="q-meta">Valida: trazabilidad de comunicación interna</div>
+  <div class="answer">
+    <strong>Qué busca:</strong> Evidencia de que la comunicación efectivamente ocurre (correos, actas, etc.).<br><br>
+    <strong>Evidencia:</strong> Correos electrónicos con copia a las áreas involucradas, con resolución adjunta. Idealmente con lista de distribución definida o procedimiento de quién debe ser informado.<br><br>
+    <strong>⚠️ Respuesta riesgosa:</strong> "Se informa verbalmente" o no tener correos como evidencia.
+  </div>
+</div>
+
+<div class="q-card" onclick="this.classList.toggle('open')">
+  <div class="question">¿Me puede mostrar la evidencia de visto bueno local para un dossier de producto importado? ¿Quién revisó los documentos de estabilidades? ¿De métodos analíticos?</div>
+  <div class="q-meta">Valida: cumplimiento del proceso de VoBo por área técnica para PTI</div>
+  <div class="answer">
+    <strong>Qué busca:</strong> Que los documentos del dossier PTI pasaron por la revisión de las áreas correspondientes (Validaciones, Estabilidades, Dirección Médica, I+D/Operaciones Analíticas).<br><br>
+    <strong>Evidencia:</strong> Correos de aprobación, firmas en checklist, registro en sistema de la revisión técnica.<br><br>
+    <strong>⚠️ Respuesta riesgosa:</strong> No tener evidencia documentada del visto bueno, o que el VoBo sea informal.
+  </div>
+</div>
+
+<div class="q-card" onclick="this.classList.toggle('open')">
+  <div class="question">¿Cómo manejan un "Término Probatorio" o "No Ha Lugar" del ISP?</div>
+  <div class="q-meta">Valida: escalamiento y manejo de NC/PNC por decisiones adversas del ISP</div>
+  <div class="answer">
+    <strong>Qué busca:</strong> Que cuando el ISP rechaza o establece términos probatorios, se evalúe como evento significativo y se abra NC o PNC según corresponda.<br><br>
+    <strong>v4.0 dice:</strong> Referencia a EID.01.01.GBL.SOP.ES y apertura de NC/PNC según EID.03.01.SAN.WI01.<br>
+    <strong>v5.0 actualiza:</strong> Referencia a SDCQAXV-A.1.9 "Eventos significativos" y SDCQAXV-A.3.4 "Proceso de eventos de excepción y capas", con soporte de MS&T.<br><br>
+    <strong>Evidencia:</strong> Registros de NC/PNC asociados a decisiones adversas del ISP. Evaluación de evento significativo si aplica.<br><br>
+    <strong>⚠️ Respuesta riesgosa:</strong> "Nunca nos ha pasado" sin poder demostrarlo, o no conocer el proceso de escalamiento.
+  </div>
+</div>
+```
+
+  </div>
+</div>
+
+<!-- ==================== CHECKLIST ==================== -->
+
+<div class="section" id="checklist">
+  <div class="card fade-in">
+    <h2>6. Checklist Pre-Auditoría</h2>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+    <div class="counter" id="progressCounter">0 de 30 completados</div>
+
+```
+<h3 style="color:var(--red)">Documentación</h3>
+
+<div class="checklist-item"><input type="checkbox" onchange="updateProgress()"><span class="priority p-critico">CRÍTICO</span><label>POE QMSOP045441 v4.0 vigente impreso/accesible</label></div>
+<div class="checklist-item"><input type="checkbox" onchange="updateProgress()"><span class="priority p-critico">CRÍTICO</span><label>Registro de capacitación del equipo en v4.0 (Anexo-01)</label></div>
+<div class="checklist-item"><input type="checkbox" onchange="updateProgress()"><span class="priority p-critico">CRÍTICO</span><label>Control de cambio abierto para v5.0 con evidencia del estado</label></div>
+<div class="checklist-item"><input type="checkbox" onchange="updateProgress()"><span class="priority p-importante">IMPORT.</span><label>Anexo-02: Requisitos documentales para modificaciones vigente</label></div>
+<div class="checklist-item"><input type="checkbox" onchange="updateProgress()"><span class="priority p-importante">IMPORT.</span><label>Anexo-03: Checklist de revisión de artes PTI completado (al menos 1 ejemplo)</label></div>
+
+<h3 style="color:var(--red)">Registros y Evidencias</h3>
+
+<div class="checklist-item"><input type="checkbox" onchange="updateProgress()"><span class="priority p-critico">CRÍTICO</span><label>DARIUS: APLs actualizadas con fechas de carga ≤24h post-sometimiento</label></div>
+<div class="checklist-item"><input type="checkbox" onchange="updateProgress()"><span class="priority p-critico">CRÍTICO</span><label>DARIUS: Cartas de deficiencia con respuestas subidas</label></div>
+<div class="checklist-item"><input type="checkbox" onchange="updateProgress()"><span class="priority p-critico">CRÍTICO</span><label>DARIUS: Actividades CCDS creadas en ≤5 días hábiles</label></div>
+<div class="checklist-item"><input type="checkbox" onchange="updateProgress()"><span class="priority p-critico">CRÍTICO</span><label>SolTRAQs: Reporte de CC abiertos del área regulatoria con estados y fechas</label></div>
+<div class="checklist-item"><input type="checkbox" onchange="updateProgress()"><span class="priority p-critico">CRÍTICO</span><label>Correos de notificación de resoluciones ISP a áreas involucradas</label></div>
+<div class="checklist-item"><input type="checkbox" onchange="updateProgress()"><span class="priority p-importante">IMPORT.</span><label>Carpeta REGULATORIO NACIONAL organizada y accesible</label></div>
+<div class="checklist-item"><input type="checkbox" onchange="updateProgress()"><span class="priority p-importante">IMPORT.</span><label>Planilla "Ingresos ISP (todo)" actualizada</label></div>
+<div class="checklist-item"><input type="checkbox" onchange="updateProgress()"><span class="priority p-importante">IMPORT.</span><label>Evidencia de VoBo local para al menos 1 dossier PTI</label></div>
+<div class="checklist-item"><input type="checkbox" onchange="updateProgress()"><span class="priority p-importante">IMPORT.</span><label>Plan de renovación firmado por Director Técnico</label></div>
+<div class="checklist-item"><input type="checkbox" onchange="updateProgress()"><span class="priority p-deseable">DESEABLE</span><label>Ejemplo de resolución rectificatoria gestionada</label></div>
+
+<h3 style="color:var(--orange)">Capacitación</h3>
+
+<div class="checklist-item"><input type="checkbox" onchange="updateProgress()"><span class="priority p-critico">CRÍTICO</span><label>Registro de capacitación vigente de cada ARN en este POE</label></div>
+<div class="checklist-item"><input type="checkbox" onchange="updateProgress()"><span class="priority p-importante">IMPORT.</span><label>Evaluación Anexo-01 completada por cada persona del equipo</label></div>
+<div class="checklist-item"><input type="checkbox" onchange="updateProgress()"><span class="priority p-deseable">DESEABLE</span><label>Evidencia de capacitación en DARIUS y SolTRAQs</label></div>
+
+<h3 style="color:var(--orange)">Roles y Responsabilidades</h3>
+
+<div class="checklist-item"><input type="checkbox" onchange="updateProgress()"><span class="priority p-importante">IMPORT.</span><label>Cada persona del equipo conoce sus responsabilidades según sección 4.0</label></div>
+<div class="checklist-item"><input type="checkbox" onchange="updateProgress()"><span class="priority p-importante">IMPORT.</span><label>SDC.L-212 Listado de back-up DT disponible y vigente</label></div>
+<div class="checklist-item"><input type="checkbox" onchange="updateProgress()"><span class="priority p-deseable">DESEABLE</span><label>Distribución de productos por ARN documentada</label></div>
+
+<h3 style="color:var(--green)">Control de Cambios / Desviaciones</h3>
+
+<div class="checklist-item"><input type="checkbox" onchange="updateProgress()"><span class="priority p-critico">CRÍTICO</span><label>CC/MoC para v5.0 del POE documentado y abierto</label></div>
+<div class="checklist-item"><input type="checkbox" onchange="updateProgress()"><span class="priority p-critico">CRÍTICO</span><label>No hay CC regulatorios vencidos sin justificación en SolTRAQs</label></div>
+<div class="checklist-item"><input type="checkbox" onchange="updateProgress()"><span class="priority p-importante">IMPORT.</span><label>Evidencia de NC/PNC si hubo "Términos probatorios" o "No ha lugar"</label></div>
+<div class="checklist-item"><input type="checkbox" onchange="updateProgress()"><span class="priority p-deseable">DESEABLE</span><label>Reporte de CAPAs cerradas que originaron cambios en este POE</label></div>
+
+<h3 style="color:var(--green)">Consistencia POE vs. Práctica</h3>
+
+<div class="checklist-item"><input type="checkbox" onchange="updateProgress()"><span class="priority p-critico">CRÍTICO</span><label>El equipo sabe que la versión vigente es v4.0 (no v5.0)</label></div>
+<div class="checklist-item"><input type="checkbox" onchange="updateProgress()"><span class="priority p-critico">CRÍTICO</span><label>Narrativa preparada para explicar diferencias v4.0 vs. práctica actual</label></div>
+<div class="checklist-item"><input type="checkbox" onchange="updateProgress()"><span class="priority p-importante">IMPORT.</span><label>Verificado que se usa SAFIS en la práctica (no GICONA)</label></div>
+<div class="checklist-item"><input type="checkbox" onchange="updateProgress()"><span class="priority p-importante">IMPORT.</span><label>Verificado que Spectra se reemplazó por nueva plataforma de material promocional</label></div>
+```
+
+  </div>
+</div>
+
+<!-- ==================== COMPARACIÓN ==================== -->
+
+<div class="section" id="comparacion">
+  <div class="card fade-in">
+    <h2>Comparación v4.0 (Vigente) vs v5.0 (En proceso)</h2>
+    <p style="margin-bottom:12px;">Cambios clave entre versiones. <strong>Recuerda: se audita contra v4.0.</strong></p>
+
+```
+<table class="comparison-table">
+  <thead>
+    <tr><th>Aspecto</th><th style="color:var(--orange)">v4.0 Vigente</th><th style="color:var(--green)">v5.0 En proceso</th><th>Riesgo</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Objetivos</strong></td>
+      <td>Procesos de AARR Nacional ante ISP</td>
+      <td>Agrega "ciclo de vida de productos, desarrollo y manejo de variaciones"</td>
+      <td><span class="risk-tag risk-mejora">BAJO</span></td>
+    </tr>
+    <tr>
+      <td><strong>Plataforma ISP</strong></td>
+      <td>GICONA</td>
+      <td>SAFIS</td>
+      <td><span class="risk-tag risk-critico">ALTO</span></td>
+    </tr>
+    <tr>
+      <td><strong>I+D</strong></td>
+      <td>Múltiples referencias a área I+D y sus POEs</td>
+      <td>Elimina I+D; funciones absorbidas por otras áreas</td>
+      <td><span class="risk-tag risk-medio">MEDIO</span></td>
+    </tr>
+    <tr>
+      <td><strong>Estabilidades/QC</strong></td>
+      <td>EBF y QC como áreas separadas</td>
+      <td>Unificadas en "Operaciones Analíticas"</td>
+      <td><span class="risk-tag risk-medio">MEDIO</span></td>
+    </tr>
+    <tr>
+      <td><strong>Plan de renovación</strong></td>
+      <td>DT hace plan, RA Project Manager visa</td>
+      <td>Program Manager con formulario "Product Registration Renew Assessment", flujo con SME</td>
+      <td><span class="risk-tag risk-medio">MEDIO</span></td>
+    </tr>
+    <tr>
+      <td><strong>Notificaciones de cambio</strong></td>
+      <td>Término "NC" genérico</td>
+      <td>"SCN" (Supplier Change Notification), referencia a SDCQAXV-C.1.4</td>
+      <td><span class="risk-tag risk-mejora">BAJO</span></td>
+    </tr>
+    <tr>
+      <td><strong>Suspensión voluntaria</strong></td>
+      <td>No existe</td>
+      <td>Sección completa con flujo y proceso en SAFIS</td>
+      <td><span class="risk-tag risk-critico">ALTO*</span></td>
+    </tr>
+    <tr>
+      <td><strong>Dispositivos médicos</strong></td>
+      <td>No existe</td>
+      <td>Flujo y proceso de certificación ANDID</td>
+      <td><span class="risk-tag risk-medio">MEDIO*</span></td>
+    </tr>
+    <tr>
+      <td><strong>LCR/Agile</strong></td>
+      <td>Solo Legacy en Agile</td>
+      <td>Locales y PTI en Agile, escenarios detallados para LCR, flujo E2E</td>
+      <td><span class="risk-tag risk-medio">MEDIO</span></td>
+    </tr>
+    <tr>
+      <td><strong>Registro trámites</strong></td>
+      <td>Planilla "Ingresos ISP (todo)" en carpeta red</td>
+      <td>Planilla hasta 2025 + SharePoint desde 2026</td>
+      <td><span class="risk-tag risk-mejora">BAJO</span></td>
+    </tr>
+    <tr>
+      <td><strong>Cancelación</strong></td>
+      <td>Básico, DT informa a AARR</td>
+      <td>Agrega marco legal (Art. 59° DS3), referencia a SDC.L-026</td>
+      <td><span class="risk-tag risk-mejora">BAJO</span></td>
+    </tr>
+    <tr>
+      <td><strong>Plazos conservación</strong></td>
+      <td>"No aplica"</td>
+      <td>LEG140: Cierre del sitio + 10 años</td>
+      <td><span class="risk-tag risk-mejora">BAJO</span></td>
+    </tr>
+    <tr>
+      <td><strong>Eventos significativos</strong></td>
+      <td>Ref. a EID.01.01.GBL.SOP.ES</td>
+      <td>Ref. a SDCQAXV-A.1.9 y SDCQAXV-A.3.4 (locales)</td>
+      <td><span class="risk-tag risk-mejora">BAJO</span></td>
+    </tr>
+    <tr>
+      <td><strong>Artes plataforma</strong></td>
+      <td>ARN revisa y aprueba por DARIUS</td>
+      <td>ARN crea, revisa y aprueba por AGILE</td>
+      <td><span class="risk-tag risk-medio">MEDIO</span></td>
+    </tr>
+    <tr>
+      <td><strong>Spectra</strong></td>
+      <td>Referenciada como plataforma de revisión material promocional</td>
+      <td>Eliminada, reemplazada por "plataforma de revisión de material promocional" genérica</td>
+      <td><span class="risk-tag risk-mejora">BAJO</span></td>
+    </tr>
+  </tbody>
+</table>
+<p style="font-size:0.78rem;color:var(--text-dim);margin-top:8px;">*Riesgo alto solo si hay productos en esa situación actualmente.</p>
+```
+
+  </div>
+</div>
+
+<!-- ==================== DIDÁCTICO ==================== -->
+
+<div class="section" id="didactico">
+  <div class="card fade-in">
+    <h2>7. Material Didáctico</h2>
+
+```
+<h3>Explicación simple — "¿Qué hace este POE?"</h3>
+<div class="tip-box">
+  Imagina que este POE es el <strong>manual de instrucciones</strong> de todo lo que hace Regulatorio Nacional con el ISP. Cada vez que queremos vender un producto nuevo, renovar uno existente, cambiar algo de un registro, o dejar de comercializar un producto, este POE nos dice <strong>qué pasos seguir, quién hace qué, dónde guardar la info, y en qué plazos</strong>.
+</div>
+
+<h3>Paso a paso operativo — Lo que haces en el día a día</h3>
+<div class="tip-box">
+  <strong>1. Inscripción:</strong> Recopilas docs → armas dossier → sometes al ISP → cargas en DARIUS (24h) → si hay observaciones, subsanas → recibes resolución → la revisas → informas a todos por correo → cierras en DARIUS.<br><br>
+  <strong>2. Renovación:</strong> DT prepara plan → confirmas tus PTI → reúnes docs legales (resolución anterior, GMP, CPP apostillados) → sometes → subes resolución a DARIUS.<br><br>
+  <strong>3. Modificación:</strong> Recibes requerimiento (CC, NC, CCDS, etc.) → evalúas qué tipo de modificación es → preparas docs → sometes al ISP → generas actividad en DARIUS → guardas en carpeta → cuando llega resolución, revisas, informas, cierras en DARIUS y SolTRAQs.<br><br>
+  <strong>4. Folletos CCDS:</strong> Recibes evento → en 5 días hábiles creas actividad en DARIUS → actualizas folleto → envías a Médica (5 días para responder) → si impacta, sometes al ISP (120 días o fecha Global) → promueves en DARIUS a "sometido".
+</div>
+
+<h3>🚫 Errores comunes que NO deben ocurrir</h3>
+<div class="alert-box alert-red">
+  <ul style="margin:0;">
+    <li><strong>No cargar en DARIUS en 24h</strong> → Brecha de trazabilidad, observación casi segura.</li>
+    <li><strong>No crear actividad CCDS en 5 días hábiles</strong> → Incumplimiento de plazo documental.</li>
+    <li><strong>No informar por correo</strong> → Si solo informas verbalmente, no hay evidencia.</li>
+    <li><strong>No revisar la resolución vs. lo sometido</strong> → Puede haber diferencias que impacten producción.</li>
+    <li><strong>Dejar CC abiertos vencidos sin justificación</strong> → El auditor los va a buscar.</li>
+    <li><strong>No tener VoBo documentado de áreas técnicas en PTI</strong> → Falta de control en dossiers importados.</li>
+  </ul>
+</div>
+
+<h3>🎯 Mini guía: "Si me preguntan en auditoría..."</h3>
+<div class="tip-box">
+  <strong>Si te preguntan qué haces:</strong> "Gestiono el ciclo de vida de los registros sanitarios de mis productos asignados ante el ISP: desde la inscripción, pasando por modificaciones y renovaciones, hasta la cancelación si procede. Todo queda registrado en DARIUS y los controles de cambio en SolTRAQs."<br><br>
+  <strong>Si te preguntan por un producto específico:</strong> Ten a mano tu listado de productos asignados. Sabe el estado de registro de cada uno (vigente, en renovación, con modificación pendiente, etc.).<br><br>
+  <strong>Si te preguntan por plazos:</strong> "Carga en DARIUS en 24 horas post-sometimiento. Actividad CCDS en 5 días hábiles. Sometimiento CCDS en 120 días o fecha Global. Renovación antes de vencimiento del R.S. (5 años)."<br><br>
+  <strong>Si te preguntan algo que no sabes:</strong> "Permítame verificar esa información y se la proporciono." NUNCA inventes.
+</div>
+```
+
+  </div>
+</div>
+
+<!-- ==================== DEFENSA ==================== -->
+
+<div class="section" id="defensa">
+  <div class="card fade-in">
+    <h2>8. Preparación Práctica para Auditoría</h2>
+
+```
+<h3>Narrativa recomendada frente al auditor</h3>
+<div class="tip-box">
+  <strong>"Nuestro procedimiento QMSOP045441 versión 4.0 define la gestión integral de registros sanitarios ante el ISP. Cubre inscripciones, renovaciones, modificaciones, cancelaciones y respuestas a la autoridad, tanto para productos de fabricación local como importados. Actualmente estamos en proceso de actualización a la versión 5.0, que incorpora mejoras derivadas de CAPAs y optimizaciones de proceso. Los cambios principales incluyen actualización de plataformas, reorganización de áreas y ampliación de alcance."</strong>
+</div>
+
+<h3>⚡ Puntos a reforzar internamente ANTES del jueves</h3>
+<div class="alert-box alert-red">
+  <strong>1. DARIUS:</strong> Verificar que todas las APLs activas están al día. Si hay alguna sin cargar, hacerlo ahora. Revisar que cartas de deficiencia tengan respuesta subida.
+</div>
+<div class="alert-box alert-red">
+  <strong>2. SolTRAQs:</strong> Sacar reporte de CC abiertos del área. Si hay vencidos, documentar justificación. Si alguno se puede cerrar antes del jueves, cerrarlo.
+</div>
+<div class="alert-box alert-orange">
+  <strong>3. CCDS pendientes:</strong> Hacer inventario de CCDS pendientes con fechas. Verificar que los que están dentro de plazo tengan actividad creada en DARIUS.
+</div>
+<div class="alert-box alert-orange">
+  <strong>4. Equipo alineado:</strong> Breve sesión de alineación: todos deben saber que la versión vigente es v4.0, que v5.0 está en proceso, y tener claras sus responsabilidades.
+</div>
+<div class="alert-box alert-blue">
+  <strong>5. Carpeta compartida:</strong> Verificar acceso a \\oneabbott.com\misc\CL\Santiago\Data\REGULATORIO NACIONAL. Confirmar que la planilla de ingresos está actualizada.
+</div>
+
+<h3>Documentos a tener listos</h3>
+<ul>
+  <li>POE vigente v4.0 (impreso o en pantalla)</li>
+  <li>CC/MoC de la v5.0 en proceso</li>
+  <li>DARIUS abierto con APLs de ejemplo</li>
+  <li>SolTRAQs con reporte de tareas</li>
+  <li>Al menos 2-3 resoluciones ISP recientes con correos de notificación</li>
+  <li>Plan de renovación vigente firmado por DT</li>
+  <li>Registros de capacitación del equipo</li>
+  <li>Listado de productos por ARN</li>
+  <li>Ejemplo de checklist Anexo-03 para PTI</li>
+  <li>Screenshot de SAFIS (para demostrar uso actual)</li>
+</ul>
+
+<h3>Alineación con otras áreas</h3>
+<div class="alert-box alert-blue">
+  <strong>Con QA:</strong> Confirmar estado de CC regulatorios en SolTRAQs. Verificar que el Coordinador Quality Systems tiene visibilidad de los CC del área.<br><br>
+  <strong>Con DT:</strong> Confirmar que el plan de renovación está firmado y disponible. Alinear narrativa sobre cancelaciones y suspensiones.<br><br>
+  <strong>Con Áreas Técnicas (Operaciones Analíticas, MS&T, Validaciones):</strong> Confirmar que tienen evidencia de VoBo en dossiers PTI recientes. Alertar que podrían ser entrevistados sobre su participación en el proceso regulatorio.<br><br>
+  <strong>Con Médica:</strong> Confirmar tiempos de respuesta en revisiones de folletos CCDS (plazo de 5 días). Tener evidencia de al menos un flujo completo.
+</div>
+```
+
+  </div>
+</div>
+
+</div>
+
+<script>
+// Tab navigation
+document.querySelectorAll('.tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById(tab.dataset.tab).classList.add('active');
+  });
+});
+
+// Checklist progress
+function updateProgress() {
+  const total = document.querySelectorAll('.checklist-item input').length;
+  const checked = document.querySelectorAll('.checklist-item input:checked').length;
+  const pct = Math.round((checked / total) * 100);
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressCounter').textContent = checked + ' de ' + total + ' completados';
+  
+  document.querySelectorAll('.checklist-item').forEach(item => {
+    if (item.querySelector('input').checked) {
+      item.classList.add('checked');
+    } else {
+      item.classList.remove('checked');
+    }
+  });
+}
+
+// Question filter
+function filterQuestions() {
+  const query = document.getElementById('searchQuestions').value.toLowerCase();
+  document.querySelectorAll('.q-card').forEach(card => {
+    const text = card.textContent.toLowerCase();
+    card.style.display = text.includes(query) ? 'block' : 'none';
+  });
+}
+</script>
+
+</body>
+</html>
